@@ -80,10 +80,10 @@ Aktiviteten Orienteringsløb blev efterfølgende oprettet uden et færdighedsteg
 **Fil:** `Pages/Activities/Index.cshtml`
 
 **Observation:**
-Knappen "Tilmeld mig" vises fortsat på aktiviteter, selv når brugeren allerede er tilmeldt.
+Under den manuelle test blev det observeret, at knappen "Tilmeld mig" stadig blev vist, selvom spejderen allerede var tilmeldt aktiviteten.
 
 **Forslag:**
-Vis eksempelvis "Allerede tilmeldt" eller tilbyd en frameldingsknap.
+Foreslået løsning: Vis "Allerede tilmeldt" i stedet for tilmeldingsknappen, når spejderen allerede deltager.
 
 **Rettelse:**
 Aktivitetsoversigten er opdateret, så systemet
