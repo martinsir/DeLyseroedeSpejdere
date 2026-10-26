@@ -85,7 +85,19 @@ Knappen "Tilmeld mig" vises fortsat på aktiviteter, selv når brugeren allerede
 **Forslag:**
 Vis eksempelvis "Allerede tilmeldt" eller tilbyd en frameldingsknap.
 
-**Status:** Forbedringsforslag – ikke implementeret.
+**Rettelse:**
+Aktivitetsoversigten er opdateret, så systemet
+kontrollerer spejderens eksisterende tilmeldinger
+via GetMineAsync().
+
+Knappen "Tilmeld mig" erstattes med
+"Allerede tilmeldt", når spejderen er tilmeldt.
+
+**Testresultat:**
+Rettelsen blev manuelt testet i Razor Pages.
+Visningen fungerer efter tilmelding.
+
+**Status:** Rettet og testet.
 
 ### CR-03 – Yderligere test af tilmeldingsbegrænsninger
 
