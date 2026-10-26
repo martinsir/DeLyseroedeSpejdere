@@ -1,48 +1,82 @@
-# Brugertest – tre personer (DoD)
+# Brugertest – De Lyserøde Spejdere
 
-Formål: Afprøv om almindelige brugere kan forstå navigation og udføre opgaver uden hjælp. Brug samme tre opgaver for hver tester, så resultaterne er sammenlignelige. Test kun efter applikationen kører.
+## 1. Formål
 
-**Opgave A (anonym):** Find tidspunkt og antal ledige pladser for ”Mad over bål”.
+Formålet med brugertesten er at undersøge, om applikationens brugergrænseflade er forståelig, og om de centrale funktioner kan gennemføres uden tekniske fejl.
 
-**Opgave B (spejder):** Log ind, tilmeld en aktivitet, og find den under ”Mine tilmeldinger”.
+Testen tager udgangspunkt i tre faste opgaver, der dækker aktivitetsoversigt, spejderfunktioner og lederfunktioner.
 
-**Opgave C (leder):** Log ind som leder, opret aktivitet, og find tilmeldte deltagere.
+**Testmiljø:** ASP.NET Core Razor Pages, Firefox og MySQL.
 
-Under hver opgave noteres om personen kunne klare den (ja/nej), eventuelle vanskeligheder og forslag til forbedring. Testpersoner må gerne være venner eller familie; de skal være tre **forskellige, reelle personer**. Del ikke adgangskoder med nogen uden for den lokale demo.
+**Testdato:** 26. oktober 2026.
 
-## Testperson 1
-Dato: __________  Testperson (fornavn/initialer): __________
+## 2. Testopgaver
 
-| Opgave | Gennemført? | Observationer / forbedringer |
+**Opgave A – Aktivitetsoversigt**
+
+Find aktiviteten "Mad over bål", og undersøg tidspunktet og antallet af ledige pladser.
+
+**Opgave B – Spejder**
+
+Log ind som spejder, tilmeld en aktivitet, og find den under "Mine tilmeldinger".
+
+**Opgave C – Leder**
+
+Log ind som leder, opret en ny aktivitet, og find de tilmeldte deltagere på en aktivitet.
+
+## 3. Testperson 1 – Intern funktionstest
+
+**Dato:** 26-10-2026  
+**Tester:** Projektudvikler
+
+| Opgave | Gennemført? | Observationer og forbedringer |
 |---|---|---|
-| A | | |
-| B | | |
-| C | | |
+| A | Ja | Aktivitetsoversigten viste navn, tidspunkt og ledige pladser. |
+| B | Ja | Tilmelding og visning af egne aktiviteter fungerede. Knappen "Tilmeld mig" blev først ikke ændret efter tilmelding. |
+| C | Ja, efter rettelse | Oprettelse af aktivitet fejlede først, fordi et valgfrit færdighedstegn blev behandlet som obligatorisk. Efter rettelsen fungerede oprettelse og deltageroversigt. |
 
-## Testperson 2
-Dato: __________  Testperson (fornavn/initialer): __________
+## 4. Testperson 2
 
-| Opgave | Gennemført? | Observationer / forbedringer |
+**Dato:** Ikke gennemført  
+**Tester:** Afventer
+
+| Opgave | Gennemført? | Observationer og forbedringer |
 |---|---|---|
-| A | | |
-| B | | |
-| C | | |
+| A | Afventer | Ikke testet |
+| B | Afventer | Ikke testet |
+| C | Afventer | Ikke testet |
 
-## Testperson 3
-Dato: __________  Testperson (fornavn/initialer): __________
+## 5. Testperson 3
 
-| Opgave | Gennemført? | Observationer / forbedringer |
+**Dato:** Ikke gennemført  
+**Tester:** Afventer
+
+| Opgave | Gennemført? | Observationer og forbedringer |
 |---|---|---|
-| A | | |
-| B | | |
-| C | | |
+| A | Afventer | Ikke testet |
+| B | Afventer | Ikke testet |
+| C | Afventer | Ikke testet |
 
-## Opsamling
+## 6. Opsamling
 
-Hvad var let? _____________________________________________________
+**Hvad fungerede godt?**
 
-Hvad var uklart? __________________________________________________
+Aktivitetsoversigten var tilgængelig, og login som både spejder og leder fungerede. Tilmeldinger kunne gemmes og vises, og lederen kunne oprette, redigere og slette aktiviteter samt se deltagere.
 
-Ændringer efter brugertest (med Git-commit): ______________________
+**Hvad var uklart eller problematisk?**
 
-**Status:** Testskabelon klar; faktiske observationer må først udfyldes efter test.
+Der blev identificeret to problemer:
+
+- Et valgfrit færdighedstegn blev behandlet som obligatorisk ved oprettelse.
+- Aktivitetsoversigten viste fortsat "Tilmeld mig" efter en gennemført tilmelding.
+
+**Ændringer efter test:**
+
+- CR-01: `RequiredBadge` blev ændret til `string?`.
+- CR-02: Aktivitetsoversigten blev ændret til at vise "Allerede tilmeldt" for eksisterende tilmeldinger.
+
+Begge rettelser blev efterfølgende testet manuelt.
+
+**Samlet status:**
+
+Den interne funktionstest er gennemført. Brugertest med tre forskellige, uafhængige personer udestår fortsat i forhold til Definition of Done.
