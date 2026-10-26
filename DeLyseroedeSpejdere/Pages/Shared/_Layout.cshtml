@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="da">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] – De Lyserøde Spejdere</title>
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+</head>
+<body>
+<header class="site-header">
+    <nav class="container nav">
+        <a class="logo" asp-page="/Activities/Index">De Lyserøde Spejdere</a>
+        <a asp-page="/Activities/Index">Aktiviteter</a>
+        @if (User.IsInRole("Scout"))
+        {
+            <a asp-page="/Scout/Mine">Mine tilmeldinger</a>
+        }
+        @if (User.IsInRole("Leader"))
+        {
+            <a asp-page="/Leader/Index">Lederpanel</a>
+        }
+        <span class="nav-spacer"></span>
+        @if (User.Identity?.IsAuthenticated == true)
+        {
+            <span class="greeting">@User.Identity.Name</span>
+            <form method="post" asp-page="/Account/Logout"><button class="btn small outline" type="submit">Log ud</button></form>
+        }
+        else
+        {
+            <a class="btn small" asp-page="/Account/Login">Log ind</a>
+        }
+    </nav>
+</header>
+<main class="container">
+    @if (TempData["Success"] is string success)
+    {
+        <div class="notice success" role="status">@success</div>
+    }
+    @if (TempData["Error"] is string error)
+    {
+        <div class="notice error" role="alert">@error</div>
+    }
+    @RenderBody()
+</main>
+<footer class="footer container">Skoleprojekt · 2. semester · Razor Pages og ADO.NET</footer>
+@await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

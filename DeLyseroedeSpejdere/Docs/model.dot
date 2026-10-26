@@ -1,0 +1,11 @@
+digraph ER {
+  graph [rankdir=LR, bgcolor="white", pad=0.15, nodesep=0.6, ranksep=0.9];
+  node [shape=record, fontname="DejaVu Sans", fontsize=10, style="rounded,filled", fillcolor="#f0f5f8", color="#41657a"];
+  Users [label="{Users|Id (PK)\lUsername (UNIQUE)\lPasswordHash\lFullName\lRole\lAge\lBadges\l}"];
+  Activities [label="{Activities|Id (PK)\lTitle\lDescription\lStartsAt / EndsAt\lMaxParticipants\lMinAge\lRequiredBadge\lLeaderId (FK)\l}"];
+  Registrations [label="{Registrations|UserId (PK,FK)\lActivityId (PK,FK)\lRegisteredAt\l}"];
+  edge [color="#486d80", fontname="DejaVu Sans", fontsize=9, arrowsize=.6];
+  Users -> Activities [label="1 leder : M aktiviteter"];
+  Users -> Registrations [label="1 bruger : M tilmeldinger"];
+  Activities -> Registrations [label="1 aktivitet : M tilmeldinger"];
+}

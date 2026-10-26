@@ -1,0 +1,29 @@
+@page
+@model DeLyseroedeSpejdere.Pages.Leader.IndexModel
+@{ ViewData["Title"] = "Lederpanel"; }
+<h1>Lederpanel</h1>
+<p>Opret og administrer lejrens aktiviteter.</p>
+<p><a class="btn" asp-page="/Leader/Create">Opret aktivitet</a></p>
+@if (Model.Activities.Count == 0)
+{
+    <p class="notice" role="status">Der er ingen aktiviteter endnu. Vælg Opret aktivitet for at begynde.</p>
+}
+<div class="table-scroll card">
+<table>
+    <thead><tr><th>Aktivitet</th><th>Dato</th><th>Deltagere</th><th>Handlinger</th></tr></thead>
+    <tbody>
+    @foreach (var a in Model.Activities)
+    {
+        <tr><td>@a.Title</td><td>@a.StartsAt.ToString("dd-MM-yyyy HH:mm")</td>
+            <td>@a.RegisteredCount / @a.MaxParticipants</td>
+            <td><div class="actions">
+                <a asp-page="/Leader/Edit" asp-route-id="@a.Id">Rediger</a>
+                <a asp-page="/Leader/Participants" asp-route-id="@a.Id">Deltagere</a>
+                <form method="post" asp-page-handler="Delete" asp-route-id="@a.Id" onsubmit="return confirm('Slet aktiviteten og dens tilmeldinger?');">
+                    <button class="btn small danger" type="submit">Slet</button>
+                </form>
+            </div></td></tr>
+    }
+    </tbody>
+</table>
+</div>

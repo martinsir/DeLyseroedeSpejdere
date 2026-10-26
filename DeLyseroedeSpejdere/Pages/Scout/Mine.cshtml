@@ -1,0 +1,22 @@
+@page
+@model DeLyseroedeSpejdere.Pages.Scout.MineModel
+@{ ViewData["Title"] = "Mine tilmeldinger"; }
+<h1>Mine tilmeldinger</h1>
+@if (Model.Activities.Count == 0)
+{
+    <div class="card">Du har ikke tilmeldt dig nogen aktiviteter endnu.</div>
+}
+else
+{
+    @foreach (var a in Model.Activities)
+    {
+        <article class="card">
+            <h2>@a.Title</h2>
+            <p>@a.StartsAt.ToString("dd-MM-yyyy HH:mm") – @a.EndsAt.ToString("HH:mm")</p>
+            <form method="post" asp-page-handler="Cancel" asp-route-id="@a.Id" onsubmit="return confirm('Vil du framelde dig aktiviteten?');">
+                <button class="btn danger" type="submit">Frameld</button>
+            </form>
+        </article>
+    }
+}
+<a asp-page="/Activities/Index">Se alle aktiviteter</a>

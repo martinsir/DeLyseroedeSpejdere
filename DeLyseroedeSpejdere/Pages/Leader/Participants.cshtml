@@ -1,0 +1,21 @@
+@page "{id:int}"
+@model DeLyseroedeSpejdere.Pages.Leader.ParticipantsModel
+@{ ViewData["Title"] = "Deltagere"; }
+<h1>Deltagere – @Model.ActivityTitle</h1>
+@if (Model.Participants.Count == 0)
+{
+    <p>Ingen spejdere er tilmeldt endnu.</p>
+}
+else
+{
+    <div class="card table-scroll"><table>
+        <thead><tr><th>Navn</th><th>Alder</th><th>Færdighedstegn</th></tr></thead>
+        <tbody>
+        @foreach (var u in Model.Participants)
+        {
+            <tr><td>@u.FullName</td><td>@u.Age</td><td>@(string.IsNullOrWhiteSpace(u.Badges) ? "Ingen" : u.Badges)</td></tr>
+        }
+        </tbody>
+    </table></div>
+}
+<a asp-page="/Leader/Index">Tilbage til lederpanel</a>

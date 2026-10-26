@@ -1,0 +1,30 @@
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 18
+VisualStudioVersion = 18.10.12217.157 stable
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DeLyseroedeSpejdere", "DeLyseroedeSpejdere.csproj", "{C7D30FE4-7E6A-4E26-91EA-FA24C4231F90}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DeLyseroedeSpejdere.Tests", "Tests\DeLyseroedeSpejdere.Tests\DeLyseroedeSpejdere.Tests.csproj", "{8162A682-413F-4DCA-A6E0-345E9D35E3FB}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{C7D30FE4-7E6A-4E26-91EA-FA24C4231F90}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C7D30FE4-7E6A-4E26-91EA-FA24C4231F90}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C7D30FE4-7E6A-4E26-91EA-FA24C4231F90}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C7D30FE4-7E6A-4E26-91EA-FA24C4231F90}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8162A682-413F-4DCA-A6E0-345E9D35E3FB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8162A682-413F-4DCA-A6E0-345E9D35E3FB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8162A682-413F-4DCA-A6E0-345E9D35E3FB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8162A682-413F-4DCA-A6E0-345E9D35E3FB}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {017E51C8-32FC-4042-9894-BC0F85FCC317}
+	EndGlobalSection
+EndGlobal

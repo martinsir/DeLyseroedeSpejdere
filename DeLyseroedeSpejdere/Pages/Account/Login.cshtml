@@ -1,0 +1,17 @@
+@page
+@model DeLyseroedeSpejdere.Pages.Account.LoginModel
+@{ ViewData["Title"] = "Log ind"; }
+<h1>Log ind</h1>
+<p>Brug din spejder- eller lederkonto.</p>
+<form method="post" class="card form">
+    <input type="hidden" name="returnUrl" value="@Model.ReturnUrl" />
+    <div asp-validation-summary="ModelOnly"></div>
+    <label asp-for="Input.Username"></label>
+    <input asp-for="Input.Username" autocomplete="username" />
+    <span asp-validation-for="Input.Username"></span>
+    <label asp-for="Input.Password"></label>
+    <input asp-for="Input.Password" autocomplete="current-password" />
+    <span asp-validation-for="Input.Password"></span>
+    <div class="actions"><button type="submit" class="btn">Log ind</button></div>
+</form>
+<p class="muted">Til undervisningsdemo findes testbrugere i README.</p>

@@ -1,0 +1,10 @@
+﻿ID;Titel;Rolle;Story Points;Sprint;Status;Beskrivelse
+US-01;Aktivitetsoversigt;Scout;2;Sprint 1;To Do;Som spejder vil jeg kunne se lejrens aktiviteter, så jeg kan vælge, hvad jeg gerne vil deltage i.
+US-02;Login og roller;User;5;Sprint 1;To Do;Som bruger vil jeg kunne logge ind som spejder eller leder, så jeg kun får adgang til mine egne funktioner.
+US-03;Opret aktivitet;Leader;3;Sprint 1;To Do;Som leder vil jeg kunne oprette aktiviteter, så spejdere kan tilmelde sig dem.
+US-04;Tilmelding;Scout;5;Sprint 2;To Do;Som spejder vil jeg kunne tilmelde mig en aktivitet, så jeg kan deltage i den.
+US-05;Mine tilmeldinger;Scout;3;Sprint 2;To Do;Som spejder vil jeg kunne se mine tilmeldinger, så jeg har overblik over lejrens program.
+US-06;Framelding;Scout;2;Sprint 2 (reserve);To Do;Som spejder vil jeg kunne framelde mig en aktivitet, så min plads frigives til andre.
+US-07;Ændre og slette aktiviteter;Leader;3;Product Backlog;To Do;Som leder vil jeg kunne ændre og nedlægge aktiviteter, så programmet forbliver aktuelt.
+US-08;Deltagerliste;Leader;3;Product Backlog;To Do;Som leder vil jeg kunne se deltagere til en aktivitet, så jeg kan planlægge afviklingen.
+US-09;Flere ledere pr. aktivitet;Leader;5;Product Backlog / ikke implementeret;To Do;Som lejrleder vil jeg kunne tilknytte flere ledere til samme aktivitet, så ansvaret kan deles.

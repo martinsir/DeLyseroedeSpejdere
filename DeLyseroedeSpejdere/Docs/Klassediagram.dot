@@ -1,0 +1,29 @@
+digraph UML {
+  graph [rankdir=LR,bgcolor="white",fontname="DejaVu Sans",splines=polyline,nodesep=.40,ranksep=.9,fontsize=13,label="De Lyserøde Spejdere - C# klassediagram (DoD)",labelloc=t];
+  node [shape=record,style="rounded,filled",fillcolor="#f6faff",color="#50718a",fontname="DejaVu Sans",fontsize=10,margin="0.10,0.05"];
+  edge [color="#637c93",fontname="DejaVu Sans",fontsize=9,arrowsize=.7];
+  User [label="{User|Id : int\lUsername : string\lRole : string\lAge : int\lBadges : string\l}"];
+  Activity [label="{Activity|Id : int\lTitle : string\lMaxParticipants : int\lMinAge : int\lRequiredBadge : string\lFreePlaces : int\l}"];
+  ActivityInput [label="{ActivityInput|Title : string\lStartsAt : DateTime\lEndsAt : DateTime\lMaxParticipants : int\l+Validate()\l}"];
+  RegistrationResult [label="{RegistrationResult|Success : bool\lMessage : string\l}"];
+  IActivityRepository [label="{«interface» IActivityRepository|GetAllAsync()\lGetByIdAsync()\lInsertAsync()\lUpdateAsync()\lDeleteAsync()\l}",fillcolor="#e6f3ed"];
+  IUserRepository [label="{«interface» IUserRepository|GetByUsernameAsync()\lInsertAsync()\l}",fillcolor="#e6f3ed"];
+  IRegistrationRepository [label="{«interface» IRegistrationRepository|JoinAsync()\lCancelAsync()\lGetMineAsync()\lGetParticipantsAsync()\l}",fillcolor="#e6f3ed"];
+  ActivityRepository [label="{ActivityRepository|SQL CRUD for aktiviteter}"];
+  UserRepository [label="{UserRepository|SQL CRUD for brugere}"];
+  RegistrationRepository [label="{RegistrationRepository|SQL til- og framelding}"];
+  DbConnectionFactory [label="{DbConnectionFactory|Create() : MySqlConnection}"];
+  RegistrationRules [label="{RegistrationRules|CheckEligibility() : RegistrationResult}"];
+  ActivityRepository -> IActivityRepository [style=dashed,arrowhead=empty,label="implementerer"];
+  UserRepository -> IUserRepository [style=dashed,arrowhead=empty,label="implementerer"];
+  RegistrationRepository -> IRegistrationRepository [style=dashed,arrowhead=empty,label="implementerer"];
+  ActivityRepository -> DbConnectionFactory [label="bruger"];
+  UserRepository -> DbConnectionFactory [label="bruger"];
+  RegistrationRepository -> DbConnectionFactory [label="bruger"];
+  ActivityRepository -> Activity [label="henter"];
+  ActivityRepository -> ActivityInput [label="gemmer"];
+  UserRepository -> User [label="henter"];
+  RegistrationRepository -> RegistrationRules [label="validerer"];
+  RegistrationRules -> RegistrationResult [label="returnerer"];
+  User -> Activity [style=dotted,label="tilmeldes via Registrations (DB)"];
+}
