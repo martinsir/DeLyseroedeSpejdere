@@ -1,37 +1,84 @@
 @page
 @model DeLyseroedeSpejdere.Pages.Activities.IndexModel
-@{ ViewData["Title"] = "Aktiviteter"; }
+
+@{
+    ViewData["Title"] = "Aktiviteter";
+}
+
 <h1>Aktiviteter på spejderlejren</h1>
 <p class="lead">Vælg en aktivitet på lejren ved Hedeland.</p>
+
 @if (Model.Activities.Count == 0)
 {
-    <div class="card"><p>Der er endnu ingen aktiviteter.</p></div>
+    <div class="card">
+        <p>Der er endnu ingen aktiviteter.</p>
+    </div>
 }
 else
 {
     <div class="grid">
-    @foreach (var a in Model.Activities)
-    {
-        <article class="card">
-            <h2>@a.Title</h2>
-            <p>@a.Description</p>
-            <p><strong>Start:</strong> @a.StartsAt.ToString("dd-MM-yyyy HH:mm")<br />
-            <strong>Slut:</strong> @a.EndsAt.ToString("dd-MM-yyyy HH:mm")<br />
-            <strong>Leder:</strong> @a.LeaderName</p>
-            <p><span class="pill">@a.FreePlaces af @a.MaxParticipants pladser ledige</span></p>
-            @if (a.MinAge > 0) { <p>Minimumsalder: @a.MinAge år</p> }
-            @if (!string.IsNullOrWhiteSpace(a.RequiredBadge)) { <p>Påkrævet tegn: @a.RequiredBadge</p> }
-            @if (User.IsInRole("Scout"))
-            {
-                <form method="post" asp-page-handler="Join" asp-route-id="@a.Id">
-                    <button type="submit" class="btn" disabled="@(a.FreePlaces == 0)">Tilmeld mig</button>
-                </form>
-            }
-            else if (User.Identity?.IsAuthenticated != true)
-            {
-                <a class="btn" asp-page="/Account/Login">Log ind for at tilmelde dig</a>
-            }
-        </article>
-    }
+        @foreach (var a in Model.Activities)
+        {
+            <article class="card">
+                <h2>@a.Title</h2>
+                <p>@a.Description</p>
+
+                <p>
+                    <strong>Start:</strong>
+                    @a.StartsAt.ToString("dd-MM-yyyy HH:mm")
+                    <br />
+                    <strong>Slut:</strong>
+                    @a.EndsAt.ToString("dd-MM-yyyy HH:mm")
+                    <br />
+                    <strong>Leder:</strong> @a.LeaderName
+                </p>
+
+                <p>
+                    <span class="pill">
+                        @a.FreePlaces af @a.MaxParticipants pladser ledige
+                    </span>
+                </p>
+
+                @if (a.MinAge > 0)
+                {
+                    <p>Minimumsalder: @a.MinAge år</p>
+                }
+
+                @if (!string.IsNullOrWhiteSpace(a.RequiredBadge))
+                {
+                    <p>Påkrævet tegn: @a.RequiredBadge</p>
+                }
+
+                @if (User.IsInRole("Scout"))
+                {
+                    if (Model.JoinedActivityIds.Contains(a.Id))
+                    {
+                        <span class="pill">Allerede tilmeldt</span>
+                    }
+                    else if (a.FreePlaces == 0)
+                    {
+                        <button class="btn" disabled>
+                            Ingen ledige pladser
+                        </button>
+                    }
+                    else
+                    {
+                        <form method="post"
+                              asp-page-handler="Join"
+                              asp-route-id="@a.Id">
+                            <button type="submit" class="btn">
+                                Tilmeld mig
+                            </button>
+                        </form>
+                    }
+                }
+                else if (User.Identity?.IsAuthenticated != true)
+                {
+                    <a class="btn" asp-page="/Account/Login">
+                        Log ind for at tilmelde dig
+                    </a>
+                }
+            </article>
+        }
     </div>
 }
