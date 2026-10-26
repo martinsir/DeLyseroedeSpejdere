@@ -1,17 +1,80 @@
 # Definition of Done – De Lyserøde Spejdere
 
-**Kilde:** Underviserens `DoD.docx`. Punkterne nedenfor er overført uden at udvande kravene. **Status er ikke det samme som godkendelse.**
+**Projektperiode:** 19.–30. oktober 2026  
+**Senest opdateret:** 26. oktober 2026
 
-| Nr. | Krav fra DoD | Dokumentation i projektet | Status pr. klargøring |
+## 1. Formål
+
+Definition of Done (DoD) beskriver de kvalitetskrav, der skal være opfyldt, før en user story kan betragtes som færdig.
+
+Kravene tager udgangspunkt i underviserens DoD og anvendes til at vurdere projektets implementering, dokumentation og testresultater.
+
+## 2. DoD – Krav og status
+
+| Nr. | Krav | Dokumentation | Status |
 |---|---|---|---|
-| 1 | Overholde Repository Pattern | `Repositories/` med SQL isoleret fra PageModels | Implementeret i kode – kræver kørsel/kodegennemgang |
-| 2 | Overholde Jakob Nielsens 10 heuristika (relevante) | `Docs/UI_Heuristik_og_Gestalt.md`, Razor Pages og CSS | Designet med relevante principper – brugergennemgang mangler |
-| 3 | Overholde Gestalt love | `Docs/UI_Heuristik_og_Gestalt.md`, CSS-grid og formulargrupper | Implementeret som designvalg – vurdering mangler |
-| 4 | Passende Interfaces implementeres | `IActivityRepository`, `IUserRepository`, `IRegistrationRepository` og DI i `Program.cs` | Implementeret i kode – kompilering mangler |
-| 5 | Klassediagram opdateret | `Docs/Klassediagram.png` og `Docs/Klassediagram.dot` | Udarbejdet – bør kontrolleres imod seneste kode |
-| 6 | Skal være godkendt i Code Review | `Docs/CodeReview.md` | **Afventer godkendelse fra en anden person** |
-| 7 | Skal overholde versionsstyring og sporbarhed | `.gitignore`, `Docs/Sporbarhed.md`, GitHub-repo skal kobles på | **Afventer faktiske Git-commits / repository** |
-| 8 | Skal brugertestes på 3 personer | `Docs/Brugertest_3_personer.md` med testcases og 3 logafsnit | **Afventer 3 reelle brugertests** |
-| 9 | Unit Test skal være implementeret | `Tests/DeLyseroedeSpejdere.Tests/` (xUnit) | Testkode skrevet – **afventer kørsel og resultater** |
+| 1 | Repository Pattern | Repositories adskiller databaseoperationer fra Razor Pages | Implementeret og delvist kodegennemgået |
+| 2 | Jakob Nielsens relevante heuristikker | UI_Heuristik_og_Gestalt.md og Razor Pages | Dokumenteret, mangler endelig brugervurdering |
+| 3 | Gestaltlovene | UI-design, CSS og strukturering af sider | Indarbejdet, mangler endelig vurdering |
+| 4 | Passende interfaces | Tre repository-interfaces og Dependency Injection | Implementeret og kompileret |
+| 5 | Opdateret klassediagram | Klassediagram.png og Klassediagram.dot | Udarbejdet, mangler endelig sammenligning |
+| 6 | Godkendt Code Review | CodeReview.md | Individuel gennemgang dokumenteret, afventer uafhængig godkendelse |
+| 7 | Versionsstyring og sporbarhed | Git, GitHub og Sporbarhed.md | Git og GitHub fungerer; sporbarhedsdokumentet skal ajourføres |
+| 8 | Brugertest med tre personer | Brugertest_3_personer.md | Manuel test gennemført; tre uafhængige testpersoner mangler |
+| 9 | Unit tests | xUnit i Visual Studio Test Explorer | 9 ud af 9 bestået |
 
-En user story må først markeres **Done**, når den fungerer og de projektfælles DoD-krav er verificeret. Brug en mellemstatus som *Implementeret – afventer DoD* indtil da.
+## 3. Gennemførte funktionelle tests
+
+Følgende funktioner er afprøvet manuelt:
+
+- TC01 – Vis aktivitetsoversigt: Bestået
+- TC02 – Login som spejder: Bestået
+- TC03 – Tilmeld aktivitet: Grundfunktion bestået
+- TC04 – Vis egne tilmeldinger: Bestået
+- TC05 – Framelding og frigivelse af plads: Bestået
+- TC06 – Opret aktivitet: Bestået efter fejlrettelse
+- TC07 – Rediger aktivitet: Bestået
+- TC08 – Vis deltagere: Bestået
+- TC09 – Slet aktivitet: Bestået
+- TC10 – Adgangskontrol: Bestået for den afprøvede lederside
+- TC11 – Unit tests: 9/9 bestået
+
+## 4. Fundne fejl og rettelser
+
+**CR-01 – Validering af færdighedstegn**
+
+Et valgfrit færdighedstegn blev behandlet som obligatorisk ved oprettelse af aktiviteter.
+
+Rettelse: `RequiredBadge` blev ændret til `string?`.
+
+Status: Rettet og testet.
+
+**CR-02 – Tilmeldingsknappens status**
+
+Knappen "Tilmeld mig" blev fortsat vist efter gennemført tilmelding.
+
+Rettelse: Aktivitetsoversigten anvender `GetMineAsync()` til at identificere eksisterende tilmeldinger og viser "Allerede tilmeldt".
+
+Status: Rettet og testet.
+
+## 5. Versionsstyring
+
+Projektet anvender Git og GitHub.
+
+**Repository:** https://github.com/martinsir/DeLyseroedeSpejdere
+
+**Branch:** main
+
+Kildekode, dokumentation, database-script og unit tests er versionsstyret.
+
+Den lokale databasekonfiguration er udelukket via `.gitignore`.
+
+## 6. Samlet vurdering
+
+Projektets centrale funktioner er implementeret og afprøvet.
+
+De automatiske tests er gennemført uden fejl, og de fejl, der blev identificeret under den manuelle test, er rettet.
+
+Definition of Done er dog endnu ikke fuldt opfyldt. Der udestår blandt andet uafhængig Code Review-godkendelse, brugertest med tre forskellige personer og endelig kontrol af dokumentation og diagrammer.
+
+User stories, der fungerer, men ikke har opfyldt samtlige DoD-krav, betragtes som **Implementeret – afventer DoD** frem for endeligt Done.
