@@ -1,15 +1,139 @@
 @page
 @model DeLyseroedeSpejdere.Pages.Leader.CreateModel
-@{ ViewData["Title"] = "Opret aktivitet"; }
+
+@{
+    ViewData["Title"] = "Opret aktivitet";
+}
+
 <h1>Opret aktivitet</h1>
-<form method="post" class="card form">
+
+<form method="post" class="card form" id="activityForm">
+
     <div asp-validation-summary="ModelOnly"></div>
-    <label asp-for="Input.Title"></label><input asp-for="Input.Title"/><span asp-validation-for="Input.Title"></span>
-    <label asp-for="Input.Description"></label><textarea asp-for="Input.Description"></textarea><span asp-validation-for="Input.Description"></span>
-    <label asp-for="Input.StartsAt"></label><input asp-for="Input.StartsAt" type="datetime-local" asp-format="{0:yyyy-MM-ddTHH:mm}"/><span asp-validation-for="Input.StartsAt"></span>
-    <label asp-for="Input.EndsAt"></label><input asp-for="Input.EndsAt" type="datetime-local" asp-format="{0:yyyy-MM-ddTHH:mm}"/><span asp-validation-for="Input.EndsAt"></span>
-    <label asp-for="Input.MaxParticipants"></label><input asp-for="Input.MaxParticipants" type="number"/><span asp-validation-for="Input.MaxParticipants"></span>
-    <label asp-for="Input.MinAge"></label><input asp-for="Input.MinAge" type="number"/><span asp-validation-for="Input.MinAge"></span>
-    <label asp-for="Input.RequiredBadge"></label><input asp-for="Input.RequiredBadge"/><span asp-validation-for="Input.RequiredBadge"></span>
-    <div class="actions"><button class="btn" type="submit">Gem aktivitet</button><a asp-page="/Leader/Index">Annuller</a></div>
+
+    <label asp-for="Input.Title"></label>
+    <input asp-for="Input.Title" />
+    <span asp-validation-for="Input.Title"></span>
+
+    <label asp-for="Input.Description"></label>
+    <textarea asp-for="Input.Description"></textarea>
+    <span asp-validation-for="Input.Description"></span>
+
+    <!-- Startdato og 24-timers klokkeslæt -->
+    <label for="startDate">Startdato</label>
+    <input id="startDate"
+           type="date"
+           lang="da-DK"
+           required />
+
+    <label for="startTime">Starttid (HH:mm)</label>
+    <input id="startTime"
+           type="text"
+           inputmode="numeric"
+           placeholder="14:00"
+           pattern="([01][0-9]|2[0-3]):[0-5][0-9]"
+           title="Brug 24-timersformat, fx 14:00"
+           maxlength="5"
+           required />
+
+    <input asp-for="Input.StartsAt"
+           type="hidden"
+           asp-format="{0:yyyy-MM-ddTHH:mm}" />
+    <span asp-validation-for="Input.StartsAt"></span>
+
+    <!-- Slutdato og 24-timers klokkeslæt -->
+    <label for="endDate">Slutdato</label>
+    <input id="endDate"
+           type="date"
+           lang="da-DK"
+           required />
+
+    <label for="endTime">Sluttid (HH:mm)</label>
+    <input id="endTime"
+           type="text"
+           inputmode="numeric"
+           placeholder="16:00"
+           pattern="([01][0-9]|2[0-3]):[0-5][0-9]"
+           title="Brug 24-timersformat, fx 16:00"
+           maxlength="5"
+           required />
+
+    <input asp-for="Input.EndsAt"
+           type="hidden"
+           asp-format="{0:yyyy-MM-ddTHH:mm}" />
+    <span asp-validation-for="Input.EndsAt"></span>
+
+    <label asp-for="Input.MaxParticipants"></label>
+    <input asp-for="Input.MaxParticipants" type="number" />
+    <span asp-validation-for="Input.MaxParticipants"></span>
+
+    <label asp-for="Input.MinAge"></label>
+    <input asp-for="Input.MinAge" type="number" />
+    <span asp-validation-for="Input.MinAge"></span>
+
+    <label asp-for="Input.RequiredBadge"></label>
+    <input asp-for="Input.RequiredBadge" />
+    <span asp-validation-for="Input.RequiredBadge"></span>
+
+    <div class="actions">
+        <button class="btn" type="submit">Gem aktivitet</button>
+        <a asp-page="/Leader/Index">Annuller</a>
+    </div>
 </form>
+
+<script>
+    (() => {
+        const form = document.getElementById("activityForm");
+
+        const fields = [
+            {
+                hidden: document.getElementById("Input_StartsAt"),
+                date: document.getElementById("startDate"),
+                time: document.getElementById("startTime")
+            },
+            {
+                hidden: document.getElementById("Input_EndsAt"),
+                date: document.getElementById("endDate"),
+                time: document.getElementById("endTime")
+            }
+        ];
+
+        // Indlæs eksisterende værdier fra C# modellen.
+        for (const field of fields) {
+            const value = field.hidden.value;
+
+            if (value && /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}/.test(value)
+                && !value.startsWith("0001-")) {
+                field.date.value = value.substring(0, 10);
+                field.time.value = value.substring(11, 16);
+            }
+        }
+
+        // Saml dato og klokkeslæt før formularen sendes.
+        form.addEventListener("submit", (event) => {
+            for (const field of fields) {
+                const date = field.date.value;
+                const time = field.time.value.trim();
+
+                if (!field.date.checkValidity() ||
+                    !/^([01][0-9]|2[0-3]):[0-5][0-9]$/.test(time)) {
+                    event.preventDefault();
+                    field.time.setCustomValidity(
+                        "Indtast klokkeslæt som HH:mm, fx 14:00."
+                    );
+                    field.time.reportValidity();
+                    return;
+                }
+
+                field.time.setCustomValidity("");
+                field.hidden.value = date + "T" + time;
+            }
+        });
+
+        for (const field of fields) {
+            field.time.addEventListener("input", () => {
+                field.time.setCustomValidity("");
+            });
+        }
+    })();
+</script>

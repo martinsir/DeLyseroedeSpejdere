@@ -1,29 +1,35 @@
 digraph UML {
-  graph [rankdir=LR,bgcolor="white",fontname="DejaVu Sans",splines=polyline,nodesep=.40,ranksep=.9,fontsize=13,label="De Lyserøde Spejdere - C# klassediagram (DoD)",labelloc=t];
-  node [shape=record,style="rounded,filled",fillcolor="#f6faff",color="#50718a",fontname="DejaVu Sans",fontsize=10,margin="0.10,0.05"];
-  edge [color="#637c93",fontname="DejaVu Sans",fontsize=9,arrowsize=.7];
-  User [label="{User|Id : int\lUsername : string\lRole : string\lAge : int\lBadges : string\l}"];
-  Activity [label="{Activity|Id : int\lTitle : string\lMaxParticipants : int\lMinAge : int\lRequiredBadge : string\lFreePlaces : int\l}"];
-  ActivityInput [label="{ActivityInput|Title : string\lStartsAt : DateTime\lEndsAt : DateTime\lMaxParticipants : int\l+Validate()\l}"];
-  RegistrationResult [label="{RegistrationResult|Success : bool\lMessage : string\l}"];
-  IActivityRepository [label="{«interface» IActivityRepository|GetAllAsync()\lGetByIdAsync()\lInsertAsync()\lUpdateAsync()\lDeleteAsync()\l}",fillcolor="#e6f3ed"];
-  IUserRepository [label="{«interface» IUserRepository|GetByUsernameAsync()\lInsertAsync()\l}",fillcolor="#e6f3ed"];
-  IRegistrationRepository [label="{«interface» IRegistrationRepository|JoinAsync()\lCancelAsync()\lGetMineAsync()\lGetParticipantsAsync()\l}",fillcolor="#e6f3ed"];
-  ActivityRepository [label="{ActivityRepository|SQL CRUD for aktiviteter}"];
-  UserRepository [label="{UserRepository|SQL CRUD for brugere}"];
-  RegistrationRepository [label="{RegistrationRepository|SQL til- og framelding}"];
-  DbConnectionFactory [label="{DbConnectionFactory|Create() : MySqlConnection}"];
-  RegistrationRules [label="{RegistrationRules|CheckEligibility() : RegistrationResult}"];
-  ActivityRepository -> IActivityRepository [style=dashed,arrowhead=empty,label="implementerer"];
-  UserRepository -> IUserRepository [style=dashed,arrowhead=empty,label="implementerer"];
-  RegistrationRepository -> IRegistrationRepository [style=dashed,arrowhead=empty,label="implementerer"];
-  ActivityRepository -> DbConnectionFactory [label="bruger"];
-  UserRepository -> DbConnectionFactory [label="bruger"];
-  RegistrationRepository -> DbConnectionFactory [label="bruger"];
-  ActivityRepository -> Activity [label="henter"];
-  ActivityRepository -> ActivityInput [label="gemmer"];
-  UserRepository -> User [label="henter"];
-  RegistrationRepository -> RegistrationRules [label="validerer"];
-  RegistrationRules -> RegistrationResult [label="returnerer"];
-  User -> Activity [style=dotted,label="tilmeldes via Registrations (DB)"];
+  graph [rankdir=TB, bgcolor="white", pad="0.3", nodesep="0.56", ranksep="1.05 equally", splines=polyline, outputorder=edgesfirst, fontname="DejaVu Sans", fontsize=20, labelloc=t, label="De Lyserøde Spejdere  |  UML-klassediagram"];
+  node [shape=record, style="filled", color="#566477", penwidth=1.4, fontsize=10.4, fontname="DejaVu Sans", margin="0.17,0.12"];
+  edge [color="#536678", penwidth=1.5, arrowsize=0.95, fontname="DejaVu Sans", fontsize=9];
+  IActivityRepository [label="{«interface»\nIActivityRepository|\l|+ GetAllAsync() : Task\<List\<Activity\>\>\l+ GetByIdAsync(id: int) : Task\<Activity?\>\l+ InsertAsync(input: ActivityInput, leaderId: int) : Task\<int\>\l+ UpdateAsync(id: int, input: ActivityInput) : Task\<bool\>\l+ DeleteAsync(id: int) : Task\<bool\>\l}", fillcolor="#eaf4f0"];
+  IUserRepository [label="{«interface»\nIUserRepository|\l|+ GetByUsernameAsync(username: string) : Task\<User?\>\l+ InsertAsync(user: User) : Task\l}", fillcolor="#eaf4f0"];
+  IRegistrationRepository [label="{«interface»\nIRegistrationRepository|\l|+ JoinAsync(userId: int, activityId: int) : Task\<RegistrationResult\>\l+ CancelAsync(userId: int, activityId: int) : Task\<bool\>\l+ GetMineAsync(userId: int) : Task\<List\<Activity\>\>\l+ GetParticipantsAsync(activityId: int) : Task\<List\<User\>\>\l}", fillcolor="#eaf4f0"];
+  ActivityRepository [label="{ActivityRepository|\l|+ ActivityRepository(factory: DbConnectionFactory)\l+ GetAllAsync() : Task\<List\<Activity\>\>\l+ GetByIdAsync(id: int) : Task\<Activity?\>\l+ InsertAsync(input: ActivityInput, leaderId: int) : Task\<int\>\l+ UpdateAsync(id: int, input: ActivityInput) : Task\<bool\>\l+ DeleteAsync(id: int) : Task\<bool\>\l}", fillcolor="#f0f5ff"];
+  UserRepository [label="{UserRepository|\l|+ UserRepository(factory: DbConnectionFactory)\l+ GetByUsernameAsync(username: string) : Task\<User?\>\l+ InsertAsync(user: User) : Task\l}", fillcolor="#f0f5ff"];
+  RegistrationRepository [label="{RegistrationRepository|\l|+ RegistrationRepository(factory: DbConnectionFactory)\l+ JoinAsync(userId: int, activityId: int) : Task\<RegistrationResult\>\l+ CancelAsync(userId: int, activityId: int) : Task\<bool\>\l+ GetMineAsync(userId: int) : Task\<List\<Activity\>\>\l+ GetParticipantsAsync(activityId: int) : Task\<List\<User\>\>\l}", fillcolor="#f0f5ff"];
+  Activity [label="{Activity|+ Id : int\l+ Title : string\l+ Description : string\l+ StartsAt : DateTime\l+ EndsAt : DateTime\l+ MaxParticipants : int\l+ MinAge : int\l+ RequiredBadge : string\l+ LeaderId : int\l+ LeaderName : string\l+ RegisteredCount : int\l+ /FreePlaces : int\l| \l}", fillcolor="#fff9e9"];
+  User [label="{User|+ Id : int\l+ Username : string\l+ PasswordHash : string\l+ FullName : string\l+ Role : string\l+ Age : int\l+ Badges : string\l| \l}", fillcolor="#fff9e9"];
+  ActivityInput [label="{ActivityInput|+ Title : string\l+ Description : string\l+ StartsAt : DateTime\l+ EndsAt : DateTime\l+ MaxParticipants : int\l+ MinAge : int\l+ RequiredBadge : string?\l|+ Validate(context: ValidationContext) : IEnumerable\<ValidationResult\>\l}", fillcolor="#fff9e9"];
+  RegistrationResult [label="{«record»\nRegistrationResult|+ Success : bool\l+ Message : string\l| \l}", fillcolor="#fff9e9"];
+  DbConnectionFactory [label="{DbConnectionFactory|- _connectionString : string\l|+ DbConnectionFactory(configuration: IConfiguration)\l+ Create() : MySqlConnection\l}", fillcolor="#f3eefb"];
+  RegistrationRules [label="{«static»\nRegistrationRules|\l|+ CheckEligibility(user: User, activity: Activity) : RegistrationResult\l}", fillcolor="#f3eefb"];
+  { rank=same; IActivityRepository; IUserRepository; IRegistrationRepository; }
+  { rank=same; ActivityRepository; UserRepository; RegistrationRepository; }
+  { rank=same; Activity; ActivityInput; User; RegistrationResult; }
+  { rank=same; DbConnectionFactory; RegistrationRules; }
+  IActivityRepository -> ActivityRepository [style=invis, weight=110, minlen=1];
+  IUserRepository -> UserRepository [style=invis, weight=110, minlen=1];
+  IRegistrationRepository -> RegistrationRepository [style=invis, weight=110, minlen=1];
+  ActivityRepository -> Activity [style=invis, weight=110, minlen=1];
+  UserRepository -> User [style=invis, weight=110, minlen=1];
+  RegistrationRepository -> RegistrationResult [style=invis, weight=110, minlen=1];
+  Activity -> DbConnectionFactory [style=invis, weight=110, minlen=1];
+  RegistrationResult -> RegistrationRules [style=invis, weight=110, minlen=1];
+  ActivityRepository -> IActivityRepository [style=dashed, arrowhead=empty, color="#206e85", penwidth=1.8, constraint=false];
+  UserRepository -> IUserRepository [style=dashed, arrowhead=empty, color="#206e85", penwidth=1.8, constraint=false];
+  RegistrationRepository -> IRegistrationRepository [style=dashed, arrowhead=empty, color="#206e85", penwidth=1.8, constraint=false];
+  ActivityRepository -> ActivityInput [style=dashed, arrowhead=vee, arrowsize=0.65, color="#8b98aa", constraint=false];
+  RegistrationRepository -> RegistrationRules [style=dashed, arrowhead=vee, arrowsize=0.65, color="#8b98aa", constraint=false];
+  RegistrationRules -> RegistrationResult [style=dashed, arrowhead=vee, arrowsize=0.65, color="#8b98aa", constraint=false];
 }

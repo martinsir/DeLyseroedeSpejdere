@@ -120,19 +120,35 @@ Følgende er kontrolleret:
 
 Demobrugerne er beregnet til udvikling og demonstration. De må ikke betragtes som produktionskonti.
 
-## 7. Unit Tests
+## 7. Registreret forbedringspunkt
 
-Automatiske tests blev udført i Visual Studios Test Explorer den 26-10-2026.
+### UX-01 – Dato- og tidsindtastning
 
-**Resultat:**
-- Antal tests: 9
-- Bestået: 9
-- Fejlet: 0
-- Sprunget over: 0
+**Problem:**
+Alle tre testpersoner oplevede vanskeligheder med
+dato- og tidsindtastningen, fordi browseren viste
+klokkeslæt med AM/PM frem for 24-timersformat.
 
-Testene omfatter validering af aktiviteter og regler for spejdertilmelding.
+**Konsekvens:**
+Brugerne var usikre på, hvordan de skulle angive
+start- og sluttidspunkter korrekt.
 
-Alle ni tests blev gennemført uden fejl.
+**Rettelse:**
+Formularerne Create.cshtml og Edit.cshtml blev
+ændret til separate felter for dato og klokkeslæt.
+
+Klokkeslæt indtastes nu i 24-timersformat (HH:mm).
+
+JavaScript samler dato og klokkeslæt, inden
+oplysningerne sendes til C# og gemmes i MySQL.
+
+**Testresultat:**
+Begge formularer er efterfølgende afprøvet lokalt.
+Oprettelse og redigering fungerer med de nye felter.
+
+**Status:**
+Rettet og lokalt testet.
+Afventer eventuel gentest med brugere.
 
 ## 8. Samlet vurdering
 

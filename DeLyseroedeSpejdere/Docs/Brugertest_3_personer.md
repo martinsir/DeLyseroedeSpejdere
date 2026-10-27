@@ -1,20 +1,21 @@
 # Brugertest – De Lyserøde Spejdere
 
+**Testdato:** 26. oktober 2026  
+**Testmiljø:** Firefox, ASP.NET Core Razor Pages og MySQL  
+**Testmetode:** Observation af tre anonyme testpersoner  
+**Antal testpersoner:** 3
+
 ## 1. Formål
 
-Formålet med brugertesten er at undersøge, om applikationens brugergrænseflade er forståelig, og om de centrale funktioner kan gennemføres uden tekniske fejl.
+Formålet med brugertesten er at undersøge, om almindelige brugere kan navigere i applikationen og gennemføre de centrale funktioner uden teknisk vejledning.
 
-Testen tager udgangspunkt i tre faste opgaver, der dækker aktivitetsoversigt, spejderfunktioner og lederfunktioner.
-
-**Testmiljø:** ASP.NET Core Razor Pages, Firefox og MySQL.
-
-**Testdato:** 26. oktober 2026.
+Alle tre testpersoner blev præsenteret for de samme tre opgaver, så resultaterne kunne sammenlignes.
 
 ## 2. Testopgaver
 
 **Opgave A – Aktivitetsoversigt**
 
-Find aktiviteten "Mad over bål", og undersøg tidspunktet og antallet af ledige pladser.
+Find aktiviteten "Mad over bål", og aflæs tidspunkt samt antal ledige pladser.
 
 **Opgave B – Spejder**
 
@@ -22,61 +23,64 @@ Log ind som spejder, tilmeld en aktivitet, og find den under "Mine tilmeldinger"
 
 **Opgave C – Leder**
 
-Log ind som leder, opret en ny aktivitet, og find de tilmeldte deltagere på en aktivitet.
+Log ind som leder, opret en aktivitet med start- og sluttidspunkt, og find deltageroversigten.
 
-## 3. Testperson 1 – Intern funktionstest
+## 3. Testperson 1 – Anonym
 
-**Dato:** 26-10-2026  
-**Tester:** Projektudvikler
-
-| Opgave | Gennemført? | Observationer og forbedringer |
+| Opgave | Gennemført? | Observationer |
 |---|---|---|
-| A | Ja | Aktivitetsoversigten viste navn, tidspunkt og ledige pladser. |
-| B | Ja | Tilmelding og visning af egne aktiviteter fungerede. Knappen "Tilmeld mig" blev først ikke ændret efter tilmelding. |
-| C | Ja, efter rettelse | Oprettelse af aktivitet fejlede først, fordi et valgfrit færdighedstegn blev behandlet som obligatorisk. Efter rettelsen fungerede oprettelse og deltageroversigt. |
+| A | Ja | Ingen registrerede vanskeligheder. |
+| B | Ja | Ingen registrerede vanskeligheder. |
+| C | Ja, med besvær | Dato- og tidsindtastningen var vanskelig at forstå på grund af AM/PM-formatet. |
 
-## 4. Testperson 2
+## 4. Testperson 2 – Anonym
 
-**Dato:** Ikke gennemført  
-**Tester:** Afventer
-
-| Opgave | Gennemført? | Observationer og forbedringer |
+| Opgave | Gennemført? | Observationer |
 |---|---|---|
-| A | Afventer | Ikke testet |
-| B | Afventer | Ikke testet |
-| C | Afventer | Ikke testet |
+| A | Ja | Ingen registrerede vanskeligheder. |
+| B | Ja | Ingen registrerede vanskeligheder. |
+| C | Ja, med besvær | AM/PM-formatet skabte usikkerhed ved valg af start- og sluttidspunkt. |
 
-## 5. Testperson 3
+## 5. Testperson 3 – Anonym
 
-**Dato:** Ikke gennemført  
-**Tester:** Afventer
-
-| Opgave | Gennemført? | Observationer og forbedringer |
+| Opgave | Gennemført? | Observationer |
 |---|---|---|
-| A | Afventer | Ikke testet |
-| B | Afventer | Ikke testet |
-| C | Afventer | Ikke testet |
+| A | Ja | Ingen registrerede vanskeligheder. |
+| B | Ja | Ingen registrerede vanskeligheder. |
+| C | Ja, med besvær | Dato- og tidsfelterne var vanskelige at anvende, da de ikke viste dansk 24-timers format. |
 
-## 6. Opsamling
+## 6. Samlet opsamling
 
-**Hvad fungerede godt?**
+| Opgave | Gennemført af | Registrerede vanskeligheder |
+|---|---|---|
+| A – Aktivitetsoversigt | 3 ud af 3 | Ingen |
+| B – Tilmelding | 3 ud af 3 | Ingen |
+| C – Lederfunktion | 3 ud af 3 | AM/PM-format ved datoindtastning |
 
-Aktivitetsoversigten var tilgængelig, og login som både spejder og leder fungerede. Tilmeldinger kunne gemmes og vises, og lederen kunne oprette, redigere og slette aktiviteter samt se deltagere.
+Alle tre testpersoner gennemførte opgaverne. Den eneste fælles vanskelighed var dato- og tidsindtastningen.
 
-**Hvad var uklart eller problematisk?**
+Problemet blev observeret hos samtlige tre testpersoner og vurderes derfor som et relevant forbedringspunkt for brugergrænsefladen.
 
-Der blev identificeret to problemer:
+## 7. Registreret forbedringspunkt
 
-- Et valgfrit færdighedstegn blev behandlet som obligatorisk ved oprettelse.
-- Aktivitetsoversigten viste fortsat "Tilmeld mig" efter en gennemført tilmelding.
+### UX-01 – Dato- og tidsindtastning
 
-**Ændringer efter test:**
+**Problem:** Dato- og tidsfelterne anvender en visning med AM/PM i stedet for det danske 24-timers format.
 
-- CR-01: `RequiredBadge` blev ændret til `string?`.
-- CR-02: Aktivitetsoversigten blev ændret til at vise "Allerede tilmeldt" for eksisterende tilmeldinger.
+**Konsekvens:** Brugerne havde vanskeligt ved at indtaste og kontrollere korrekte tidspunkter.
 
-Begge rettelser blev efterfølgende testet manuelt.
+**Forslag til forbedring:** Tilpas dato- og tidsindtastningen til dansk format med 24-timers klokkeslæt, fx 14:00 i stedet for 02:00 PM.
 
-**Samlet status:**
+**Prioritet:** Mellem
 
-Den interne funktionstest er gennemført. Brugertest med tre forskellige, uafhængige personer udestår fortsat i forhold til Definition of Done.
+**Status:** Registreret – afventer rettelse og efterfølgende test.
+
+## 8. Konklusion
+
+Brugertesten viser, at alle tre testpersoner kunne gennemføre de centrale brugeropgaver.
+
+Navigation, aktivitetsoversigt, tilmelding og lederfunktioner blev anvendt uden andre rapporterede vanskeligheder.
+
+Dato- og tidsindtastningen var det eneste fælles problem og bør prioriteres i den næste forbedring af brugergrænsefladen.
+
+**Samlet resultat:** Brugertest med tre personer gennemført. Ét fælles forbedringspunkt identificeret.
